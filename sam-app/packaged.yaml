@@ -12,14 +12,14 @@ Resources:
   HelloWorldFunction:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: s3://sam-app-turtorial/5fb9ad346a8a1b76240e0d2be94c4ee3
-      Handler: app.lambdaHandler
+      CodeUri: s3://sam-app-turtorial/6434ac052e5e89681602a56c6a98792a
+      Handler: handler.lambdaHandler
       Runtime: nodejs12.x
       Events:
         HelloWorld:
           Type: Api
           Properties:
-            Path: /hello2
+            Path: /hello
             Method: get
 Outputs:
   HelloWorldApi:

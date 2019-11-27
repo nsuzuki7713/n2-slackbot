@@ -70,5 +70,22 @@ $ sam deploy \
     --stack-name sam-app \
     --capabilities CAPABILITY_IAM
 
+$ aws cloudformation describe-stacks \
+    --stack-name sam-app \
+    --query 'Stacks[].Outputs[?OutputKey==`HelloWorldApi`]' \
+    --output table
 ```
 
+### TypeScript導入
+https://qiita.com/notakaos/items/3bbd2293e2ff286d9f49
+```
+$ yarn init
+# typeScripのinstall
+$ yarn add -D typescript @types/node
+# tsconfig.json 生成
+$ npx tsc --init
+# ts-nodeをinstall
+$ yarn add -D ts-node
+# rimraf npm-run-allのinstall
+$ yarn add -D rimraf npm-run-all
+```
