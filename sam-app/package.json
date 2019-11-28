@@ -12,7 +12,10 @@
   },
   "scripts": {
     "clean": "rimraf dist/*",
-    "tsc": "tsc",
-    "build": "npm-run-all clean tsc"
+    "tsc": "tsc -p tsconfig.json",
+    "cp": "cp -f ./package.json ./yarn.lock ./dist",
+    "prodInstall": "yarn install --cwd ./dist  --production",
+    "build": "npm-run-all clean tsc cp prodInstall",
+    "deploy": "./deploy.sh"
   }
 }
