@@ -1,4 +1,5 @@
-./dist
+dist
+packaged.yaml
 
 ### Node ###
 # Logs
