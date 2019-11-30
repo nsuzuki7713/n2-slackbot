@@ -89,3 +89,8 @@ $ yarn add -D ts-node
 # rimraf npm-run-allのinstall
 $ yarn add -D rimraf npm-run-all
 ```
+
+### Jest導入
+```
+$ yarn add jest ts-jest @types/jest -D
+```
