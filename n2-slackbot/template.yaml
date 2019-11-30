@@ -1,39 +1,53 @@
+# CloudFormationのバージョンを指定
+# テンプレートの機能を識別(現在は2010-09-09が唯一)
 AWSTemplateFormatVersion: '2010-09-09'
-Transform: AWS::Serverless-2016-10-31
-Description: >
-  sam-app
 
-  Sample SAM Template for sam-app
-  
+# テンプレートを処理するために使用するマクロ
+# SAM)構文で記述されたテンプレートをCloudFormation テンプレートに変換および拡張する
+Transform: AWS::Serverless-2016-10-31
+
+# テンプレート実行時に表示される説明
+Description: >
+  n2-slackbot
+
+# ランタイム、メモリなどの共通構成定義して、すべてのリソースに複製することができる
 # More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
 Globals:
   Function:
     Timeout: 3
 
+# AWSリソースを記載する
 Resources:
-  HelloWorldFunction:
-    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+  # ここは任意に命名することができ、設定したIDを元に他のリソースから参照
+  N2SlackbotFunction:
+    # 作成するAWSリソース
+    # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Type: AWS::Serverless::Function
+    # リソースの設定値
     Properties:
       CodeUri: dist/
       Handler: handler.lambdaHandler
       Runtime: nodejs12.x
       Events:
-        HelloWorld:
-          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+        N2Slackbot:
+          # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Type: Api 
           Properties:
-            Path: /hello
+            Path: /anniversary
             Method: get
 
 Outputs:
+  # スタックを生成した結果を出力する
+  # cloudformationコンソールやAWS CLIで確認できる
   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
   # Find out more about other implicit resources you can reference within SAM
   # https://github.com/awslabs/serverless-application-model/blob/master/docs/internals/generated_resources.rst#api
-  HelloWorldApi:
-    Description: "API Gateway endpoint URL for Prod stage for Hello World function"
-    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/hello/"
-  HelloWorldFunction:
-    Description: "Hello World Lambda Function ARN"
-    Value: !GetAtt HelloWorldFunction.Arn
-  HelloWorldFunctionIamRole:
-    Description: "Implicit IAM Role created for Hello World function"
-    Value: !GetAtt HelloWorldFunctionRole.Arn
+  N2SlackbotApi:
+    Description: "API Gateway endpoint URL for Prod stage for n2-slackbot function"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/anniversary/"
+  N2SlackbotFunction:
+    Description: "n2-slackbot Lambda Function ARN"
+    Value: !GetAtt N2SlackbotFunction.Arn
+  N2SlackbotFunctionIamRole:
+    Description: "Implicit IAM Role created for n2-slackbot function"
+    Value: !GetAtt N2SlackbotFunctionRole.Arn
