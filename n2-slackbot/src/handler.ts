@@ -1,9 +1,12 @@
 export async function lambdaHandler(event: any, context: any): Promise<any> {
+  console.log(event);
+  console.log(context);
+  const body = JSON.parse(event.body);
   try {
     const response = {
       statusCode: 200,
       body: JSON.stringify({
-        message: "hello world3"
+        challenge: body.challenge
       })
     };
 

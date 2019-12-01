@@ -34,7 +34,7 @@ Resources:
           Type: Api 
           Properties:
             Path: /anniversary
-            Method: get
+            Method: post
 
 Outputs:
   # スタックを生成した結果を出力する
