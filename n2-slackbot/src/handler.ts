@@ -9,7 +9,8 @@ export async function lambdaHandler(event: any, context: any): Promise<any> {
     body.event &&
     body.event.type === "message" &&
     !body.event.subtype &&
-    !body.event.bot_id
+    !body.event.bot_id &&
+    body.event.channel === "CK2LL2QVC"
   ) {
     await slack();
   }
