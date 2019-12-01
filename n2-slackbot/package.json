@@ -23,7 +23,7 @@
     "test": "jest",
     "clean": "rimraf dist/*",
     "tsc": "tsc -p tsconfig.json",
-    "cp": "cp -f ./package.json ./yarn.lock ./dist",
+    "cp": "cp -f ./package.json ./yarn.lock ./.env ./dist",
     "prodInstall": "yarn install --cwd ./dist  --production",
     "build": "npm-run-all clean tsc cp prodInstall",
     "deploy": "./deploy.sh",
@@ -45,6 +45,11 @@
     },
     "testMatch": [
       "**/__tests__/**/*.test.ts"
-    ]
+    ],
+    "testEnvironment": "node"
+  },
+  "dependencies": {
+    "@slack/web-api": "^5.6.0",
+    "dotenv": "^8.2.0"
   }
 }

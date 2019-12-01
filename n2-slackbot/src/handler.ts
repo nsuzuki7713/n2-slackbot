@@ -1,7 +1,19 @@
+import { slack } from "./slackBot";
+
 export async function lambdaHandler(event: any, context: any): Promise<any> {
   console.log(event);
   console.log(context);
   const body = JSON.parse(event.body);
+
+  if (
+    body.event &&
+    body.event.type === "message" &&
+    !body.event.subtype &&
+    !body.event.bot_id
+  ) {
+    await slack();
+  }
+
   try {
     const response = {
       statusCode: 200,
