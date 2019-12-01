@@ -1,9 +1,13 @@
 import { slack } from "./slackBot";
+import lambda from "aws-lambda";
 
-export async function lambdaHandler(event: any, context: any): Promise<any> {
+export async function lambdaHandler(
+  event: lambda.APIGatewayProxyEvent,
+  context: lambda.Context
+): Promise<any> {
   console.log(event);
   console.log(context);
-  const body = JSON.parse(event.body);
+  const body = JSON.parse(event.body as string);
 
   if (
     body.event &&
