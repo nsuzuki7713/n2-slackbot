@@ -94,3 +94,17 @@ $ yarn add -D rimraf npm-run-all
 ```
 $ yarn add jest ts-jest @types/jest -D
 ```
+
+### ESLint
+https://github.com/notakaos/typescript-node-base-with-eslint-prettier
+
+https://qiita.com/suzuki_sh/items/fe9b60c4f9e1dbc5d903
+
+```
+# esint
+$ yarn add -D eslint @typescript-eslint/parser @typescript-eslint/eslint-plugin
+# prettier
+$ yarn add -D prettier eslint-config-prettier eslint-plugin-prettier
+```
+
+vscodeでESLintのプラグインを入れる
