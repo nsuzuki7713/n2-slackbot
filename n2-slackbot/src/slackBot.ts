@@ -1,20 +1,11 @@
-import { WebClient, WebAPICallResult } from "@slack/web-api";
+import { WebClient } from "@slack/web-api";
+import { ChatPostMessageResult } from "./interface";
 require("dotenv").config();
 
-const web = new WebClient(process.env.SLACK_BOT_TOKEN);
-
-interface ChatPostMessageResult extends WebAPICallResult {
-  channel: string;
-  ts: string;
-  message: {
-    text: string;
-  };
-}
-
-export async function slack(): Promise<void> {
-  // The result is cast to the interface
+export async function postMessage(text: string): Promise<void> {
+  const web = new WebClient(process.env.SLACK_BOT_TOKEN);
   const res = (await web.chat.postMessage({
-    text: "Hello world",
+    text,
     channel: process.env.SLACK_CHANNEL as string
   })) as ChatPostMessageResult;
 
