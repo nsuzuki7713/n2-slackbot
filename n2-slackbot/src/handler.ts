@@ -1,6 +1,8 @@
 import { postMessage } from "./slackBot";
 import lambda from "aws-lambda";
 import { EventApiRequest, Response } from "./interface";
+import moment from "moment";
+import "moment-precise-range-plugin";
 require("dotenv").config();
 
 export async function lambdaHandler(
@@ -10,7 +12,7 @@ export async function lambdaHandler(
   const body = JSON.parse(event.body as string) as EventApiRequest;
 
   if (isPostMessage(body)) {
-    const text = createText();
+    const text = createText("結婚記念日", "2015/07/25");
     await postMessage(text);
   }
 
@@ -35,6 +37,7 @@ function isPostMessage(body: EventApiRequest): boolean {
   );
 }
 
-function createText(): string {
-  return "記念日\n 結構記念日(2015/7/25): 3年目:blush:";
+export function createText(anniversary: string, date: string): string {
+  const diff = moment.preciseDiff(moment(), moment(date, "YYYY/MM/DD"), true);
+  return `${anniversary}(${date}): ${diff.years}年${diff.months}ヶ月${diff.days}日`;
 }

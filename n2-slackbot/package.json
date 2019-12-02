@@ -6,6 +6,7 @@
   "devDependencies": {
     "@types/aws-lambda": "^8.10.36",
     "@types/jest": "^24.0.23",
+    "@types/moment-precise-range-plugin": "^0.2.0",
     "@types/node": "^12.12.14",
     "@typescript-eslint/eslint-plugin": "^2.9.0",
     "@typescript-eslint/parser": "^2.9.0",
@@ -51,6 +52,8 @@
   },
   "dependencies": {
     "@slack/web-api": "^5.6.0",
-    "dotenv": "^8.2.0"
+    "dotenv": "^8.2.0",
+    "moment": "^2.24.0",
+    "moment-precise-range-plugin": "^1.3.0"
   }
 }
