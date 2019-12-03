@@ -1,9 +1,32 @@
 import { postMessage } from "./slackBot";
 import lambda from "aws-lambda";
-import { EventApiRequest, Response } from "./interface";
+import { Anniversary, EventApiRequest, Response } from "./interface";
 import moment from "moment";
 import "moment-precise-range-plugin";
 require("dotenv").config();
+
+const anniversaries: Anniversary[] = [
+  {
+    text: process.env.ANNIVERSARY_TEXT1 as string,
+    date: process.env.ANNIVERSARY_DATE1 as string
+  },
+  {
+    text: process.env.ANNIVERSARY_TEXT2 as string,
+    date: process.env.ANNIVERSARY_DATE2 as string
+  },
+  {
+    text: process.env.ANNIVERSARY_TEXT3 as string,
+    date: process.env.ANNIVERSARY_DATE3 as string
+  },
+  {
+    text: process.env.ANNIVERSARY_TEXT4 as string,
+    date: process.env.ANNIVERSARY_DATE4 as string
+  },
+  {
+    text: process.env.ANNIVERSARY_TEXT5 as string,
+    date: process.env.ANNIVERSARY_DATE5 as string
+  }
+];
 
 export async function lambdaHandler(
   event: lambda.APIGatewayProxyEvent
@@ -12,8 +35,10 @@ export async function lambdaHandler(
   const body = JSON.parse(event.body as string) as EventApiRequest;
 
   if (isPostMessage(body)) {
-    const text = createText("結婚記念日", "2015/07/25");
-    await postMessage(text);
+    const message = anniversaries.map(anniversary => {
+      return createText(anniversary.text, anniversary.date);
+    });
+    await postMessage(message.join("\n"));
   }
 
   const response = {

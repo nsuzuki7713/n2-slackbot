@@ -21,3 +21,8 @@ export interface ChatPostMessageResult extends WebAPICallResult {
     text: string;
   };
 }
+
+export interface Anniversary {
+  text: string;
+  date: string;
+}
