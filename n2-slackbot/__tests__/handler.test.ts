@@ -2,14 +2,15 @@ import { lambdaHandler, createText } from "../src/handler";
 import { Anniversary } from "../src/interface";
 require("dotenv").config();
 
-// describe("handler", (): void => {
-//   test("test lambdaHandler", async (): Promise<any> => {
-//     const response: any = await lambdaHandler({"Tom"});
-//     expect(response.statusCode).toBe(200);
-//   });
-// });
+describe("handler", (): void => {
+  test("test lambdaHandler", async (): Promise<any> => {
+    // const response: any = await lambdaHandler({"Tom"});
+    // expect(response.statusCode).toBe(200);
+    expect(1).toBe(2);
+  });
+});
 
-describe.only("createText", (): void => {
+describe("createText", (): void => {
   it("test lambdaHandler", async () => {
     const anniversaries: Anniversary[] = [
       {

@@ -1,5 +1,6 @@
 dist
 packaged.yaml
+coverage
 
 ### Node ###
 # Logs

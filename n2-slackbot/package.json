@@ -48,7 +48,9 @@
     "testMatch": [
       "**/__tests__/**/*.test.ts"
     ],
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "collectCoverage": true,
+    "coverageReporters": ["text", "lcov"]
   },
   "dependencies": {
     "@slack/web-api": "^5.6.0",
