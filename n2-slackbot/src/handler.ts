@@ -5,7 +5,7 @@ import moment from "moment";
 import "moment-precise-range-plugin";
 require("dotenv").config();
 
-const anniversaries: Anniversary[] = [
+export const anniversaries: Anniversary[] = [
   {
     text: process.env.ANNIVERSARY_TEXT1 as string,
     date: process.env.ANNIVERSARY_DATE1 as string
@@ -46,7 +46,7 @@ export async function lambdaHandler(
     const message = anniversaries.map(anniversary => {
       return createText(anniversary.text, anniversary.date);
     });
-    await postMessage(message.join("\n"));
+    // await postMessage(message.join("\n"));
   }
 
   const response = {
@@ -55,7 +55,7 @@ export async function lambdaHandler(
   return response;
 }
 
-function isPostMessage(body: EventApiRequest): boolean {
+export function isPostMessage(body: EventApiRequest): boolean {
   // スラックボットからの投稿
   // 投稿の変更や削除
   // 記念日チャンネル以外
