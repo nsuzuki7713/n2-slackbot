@@ -19,6 +19,14 @@ const anniversaries: Anniversary[] = [
     date: process.env.ANNIVERSARY_DATE3 as string
   },
   {
+    text: process.env.ANNIVERSARY_TEXT6 as string,
+    date: process.env.ANNIVERSARY_DATE6 as string
+  },
+  {
+    text: process.env.ANNIVERSARY_TEXT7 as string,
+    date: process.env.ANNIVERSARY_DATE7 as string
+  },
+  {
     text: process.env.ANNIVERSARY_TEXT4 as string,
     date: process.env.ANNIVERSARY_DATE4 as string
   },
