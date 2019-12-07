@@ -46,7 +46,7 @@ export async function lambdaHandler(
     const message = anniversaries.map(anniversary => {
       return createText(anniversary.text, anniversary.date);
     });
-    // await postMessage(message.join("\n"));
+    await postMessage(message.join("\n"));
   }
 
   const response = {
