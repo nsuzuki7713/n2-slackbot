@@ -1,6 +1,6 @@
 import { WebAPICallResult } from '@slack/web-api';
 
-export interface EventApiRequest {
+export interface SlackEvent {
   event: {
     /** 投稿内容 */
     text: string;

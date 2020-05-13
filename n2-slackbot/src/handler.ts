@@ -1,9 +1,13 @@
 import { postMessage } from './slackBot';
 import lambda from 'aws-lambda';
-import { Anniversary, EventApiRequest, Response } from './interface';
+import { Anniversary, SlackEvent, Response } from './interface';
 import moment from 'moment';
 import 'moment-precise-range-plugin';
-require('dotenv').config();
+import dotenv from 'dotenv';
+import { initialize, configInfo } from './config';
+
+dotenv.config();
+initialize();
 
 export const anniversaries: Anniversary[] = [
   {
@@ -37,34 +41,45 @@ export const anniversaries: Anniversary[] = [
 ];
 
 export async function lambdaHandler(event: lambda.APIGatewayProxyEvent): Promise<Response> {
-  console.log(event);
-  const body = JSON.parse(event.body as string) as EventApiRequest;
-
-  if (isPostMessage(body)) {
-    const message = anniversaries.map(anniversary => {
-      return createText(anniversary.text, anniversary.date);
-    });
-    await postMessage(message.join('\n'));
+  if (!event.body) {
+    return {
+      statusCode: 200,
+    };
   }
 
-  const response = {
+  const slackEvent = JSON.parse(event.body) as SlackEvent;
+
+  if (!isTargetChannel(slackEvent)) {
+    return {
+      statusCode: 200,
+    };
+  }
+
+  switch (slackEvent.event.text) {
+    case '記念日': {
+      const message = anniversaries.map(anniversary => {
+        return createText(anniversary.text, anniversary.date);
+      });
+      await postMessage(message.join('\n'));
+    }
+  }
+
+  return {
     statusCode: 200,
   };
-  return response;
 }
 
-export function isPostMessage(body: EventApiRequest): boolean {
+function isTargetChannel(slack: SlackEvent): boolean {
   // スラックボットからの投稿
   // 投稿の変更や削除
   // 記念日チャンネル以外
   // "記念日"という投稿以外からの場合は反応しない
   return (
-    body.event &&
-    body.event.type === 'message' &&
-    !body.event.subtype &&
-    !body.event.bot_id &&
-    body.event.channel === process.env.SLACK_CHANNEL &&
-    body.event.text === '記念日'
+    slack.event &&
+    slack.event.type === 'message' &&
+    !slack.event.subtype &&
+    !slack.event.bot_id &&
+    slack.event.channel === configInfo.SLACK_CHANNEL_DEV
   );
 }
 
