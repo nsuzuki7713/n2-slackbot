@@ -1,4 +1,4 @@
-import { WebAPICallResult } from "@slack/web-api";
+import { WebAPICallResult } from '@slack/web-api';
 
 export interface EventApiRequest {
   event: {
