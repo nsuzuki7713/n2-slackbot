@@ -17,7 +17,11 @@ export async function lambdaHandler(event: lambda.APIGatewayProxyEvent): Promise
   if (!isTargetChannel(slackEvent)) return response();
   switch (slackEvent.event.text) {
     case '記念日':
-      await postMessage(createAnniversaryMessage());
+      await postMessage(createAnniversaryMessage(), slackEvent.event.channel);
+      break;
+    case 'ゴミの日':
+      await postMessage(createGarbageMessage(), slackEvent.event.channel);
+      break;
   }
 
   return response();
@@ -47,4 +51,39 @@ export function createAnniversaryMessage(): string {
       return `${anniversary.text}(${anniversary.date}): ${diff.years}年${diff.months}ヶ月${diff.days}日`;
     })
     .join('\n');
+}
+
+export function createGarbageMessage(): string {
+  const weekdays = ['日', '月', '火', '水', '木', '金', '土'];
+  const garbageWeek = [2, 4];
+  let date = moment().utcOffset('+0900');
+  const message = [];
+  let count = 0;
+
+  // eslint-disable-next-line no-constant-condition
+  while (true) {
+    const weekCount = Math.floor((date.date() + 6) / 7);
+    const weekday = weekdays[date.days()];
+
+    if (garbageWeek.includes(weekCount)) {
+      if (weekday === '金') {
+        message.push(`燃やさないゴミは${count}日後の${date.format('M/D')}`);
+      }
+      if (weekday === '水') {
+        message.push(`古紙・ビンカンゴミは${count}日後の${date.format('M/D')}`);
+      }
+      if (weekday === '土') {
+        message.push(`ペットボトルは${count}日後の${date.format('M/D')}`);
+      }
+    }
+    if (message.length >= 3) {
+      break;
+    }
+    count++;
+    date = date.add(1, 'd');
+  }
+
+  message.push('https://www.city.arakawa.tokyo.jp/kurashi/gomi/shushubi/syusyubi.files/saisin-gominodasikata.pdf');
+
+  return message.join('\n');
 }
