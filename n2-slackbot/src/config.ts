@@ -1,22 +1,7 @@
-export let configInfo = {
-  SLACK_CHANNEL: '',
-  SLACK_CHANNEL_DEV: '',
-  SLACK_BOT_TOKEN: '',
-  ANNIVERSARY_TEXT1: '',
-  ANNIVERSARY_DATE1: '',
-  ANNIVERSARY_TEXT2: '',
-  ANNIVERSARY_DATE2: '',
-  ANNIVERSARY_TEXT3: '',
-  ANNIVERSARY_DATE3: '',
-  ANNIVERSARY_TEXT4: '',
-  ANNIVERSARY_DATE4: '',
-  ANNIVERSARY_TEXT5: '',
-  ANNIVERSARY_DATE5: '',
-  ANNIVERSARY_TEXT6: '',
-  ANNIVERSARY_DATE6: '',
-  ANNIVERSARY_TEXT7: '',
-  ANNIVERSARY_DATE7: '',
-};
+import { Anniversary, Config } from './interface';
+
+export let configInfo: Config;
+export const anniversaries: Anniversary[] = [];
 
 export function initialize(): void {
   configInfo = {
@@ -24,20 +9,13 @@ export function initialize(): void {
     SLACK_CHANNEL: process.env.SLACK_CHANNEL!,
     SLACK_CHANNEL_DEV: process.env.SLACK_CHANNEL_DEV!,
     SLACK_BOT_TOKEN: process.env.SLACK_BOT_TOKEN!,
-    ANNIVERSARY_TEXT1: process.env.ANNIVERSARY_TEXT1!,
-    ANNIVERSARY_DATE1: process.env.ANNIVERSARY_DATE1!,
-    ANNIVERSARY_TEXT2: process.env.ANNIVERSARY_TEXT2!,
-    ANNIVERSARY_DATE2: process.env.ANNIVERSARY_DATE2!,
-    ANNIVERSARY_TEXT3: process.env.ANNIVERSARY_TEXT3!,
-    ANNIVERSARY_DATE3: process.env.ANNIVERSARY_DATE3!,
-    ANNIVERSARY_TEXT4: process.env.ANNIVERSARY_TEXT4!,
-    ANNIVERSARY_DATE4: process.env.ANNIVERSARY_DATE4!,
-    ANNIVERSARY_TEXT5: process.env.ANNIVERSARY_TEXT5!,
-    ANNIVERSARY_DATE5: process.env.ANNIVERSARY_DATE5!,
-    ANNIVERSARY_TEXT6: process.env.ANNIVERSARY_TEXT6!,
-    ANNIVERSARY_DATE6: process.env.ANNIVERSARY_DATE6!,
-    ANNIVERSARY_TEXT7: process.env.ANNIVERSARY_TEXT7!,
-    ANNIVERSARY_DATE7: process.env.ANNIVERSARY_DATE7!,
-    /* eslint-enable */
   };
+
+  for (let i = 1; i <= 7; i++) {
+    anniversaries.push({
+      /* eslint-disable @typescript-eslint/no-non-null-assertion */
+      text: process.env[`ANNIVERSARY_TEXT${i}`]!,
+      date: process.env[`ANNIVERSARY_DATE${i}`]!,
+    });
+  }
 }

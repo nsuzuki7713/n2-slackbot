@@ -33,3 +33,9 @@ export interface Anniversary {
   /** 記念日(YYYY/MM/DD) */
   date: string;
 }
+
+export interface Config {
+  SLACK_CHANNEL: string;
+  SLACK_CHANNEL_DEV: string;
+  SLACK_BOT_TOKEN: string;
+}
