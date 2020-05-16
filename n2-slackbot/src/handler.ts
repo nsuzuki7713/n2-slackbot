@@ -3,10 +3,8 @@ import lambda from 'aws-lambda';
 import { SlackEvent, Response } from './interface';
 import moment from 'moment';
 import 'moment-precise-range-plugin';
-import dotenv from 'dotenv';
 import { initialize, configInfo, anniversaries } from './config';
 
-dotenv.config();
 initialize();
 
 export async function lambdaHandler(event: lambda.APIGatewayProxyEvent): Promise<Response> {
