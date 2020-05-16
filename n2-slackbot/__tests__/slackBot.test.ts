@@ -1,10 +1,38 @@
-import { postMessage } from "../src/slackBot";
+/* eslint-disable @typescript-eslint/ban-ts-ignore */
+import { postMessage } from '../src/slackBot';
+import { initialize, configInfo } from '../src/config';
+import dotenv from 'dotenv';
+import { WebClient } from '@slack/web-api';
 
-jest.mock("WebClient");
+dotenv.config();
+initialize();
 
-describe("postMessage()", (): void => {
-  it("slack投稿の動作確認", async (): Promise<void> => {
-    const text = "記念日\n 結婚記念日(2015/7/25): 3年目:blush:";
-    // await postMessage(text);
+jest.mock('@slack/web-api');
+const mockPostMessage = jest.fn(() =>
+  Promise.resolve({
+    channel: 'dummy',
+    ts: '111',
+    message: 'test',
+  })
+);
+
+// @ts-ignore
+WebClient.mockImplementation(() => {
+  return {
+    chat: {
+      postMessage: mockPostMessage,
+    },
+  };
+});
+
+describe('postMessage()', (): void => {
+  beforeEach(() => {
+    mockPostMessage.mockClear();
+  });
+
+  it('想定通りの引数でpostMessageが呼ばれる', async (): Promise<void> => {
+    await postMessage('こんにちは', configInfo.SLACK_CHANNEL_DEV);
+    // @ts-ignore
+    expect(mockPostMessage.mock.calls[0][0]).toEqual({ text: 'こんにちは', channel: configInfo.SLACK_CHANNEL_DEV });
   });
 });
