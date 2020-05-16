@@ -1,75 +1,34 @@
-import { anniversaries, lambdaHandler, createText, isPostMessage } from '../src/handler';
-import { Anniversary, SlackEvent } from '../src/interface';
+import { lambdaHandler } from '../src/handler';
+import * as _ from 'lodash';
 import { eventTest } from './testData';
-require('dotenv').config();
+import dotenv from 'dotenv';
 
-describe('lambdaHandler', (): void => {
-  jest.mock('isPostMessage');
-  it.only('test lambdaHandler', async (): Promise<any> => {
-    // const response: any = await lambdaHandler(eventTest);
-    // expect(response.statusCode).toBe(200);
-  });
-});
+dotenv.config();
 
-describe('createText()', (): void => {
-  // https://stackoverflow.com/questions/56425230/mock-moment-in-jest
-  jest.spyOn(Date, 'now').mockReturnValueOnce(new Date('2019/02/15').getTime());
-  it('記念日の経過日数を返す', async () => {
-    expect(createText('ダミー記念日', '2018/01/01')).toBe('ダミー記念日(2018/01/01): 1年1ヶ月14日');
+describe.skip('実際にslackへ通知する確認', () => {
+  it('記念日を通知する', async () => {
+    const mockEvent = _.cloneDeep(eventTest);
+    const mockBody = {
+      event: {
+        text: '記念日',
+        type: 'message',
+        channel: process.env.SLACK_CHANNEL_DEV,
+      },
+    };
+    mockEvent.body = JSON.stringify(mockBody);
+    await lambdaHandler(mockEvent);
   });
-});
 
-describe('isPostMessage()', (): void => {
-  it('slack通知するevent', async () => {
-    const eventParams: SlackEvent = {
+  it('ゴミの日を通知する', async () => {
+    const mockEvent = _.cloneDeep(eventTest);
+    const mockBody = {
       event: {
-        text: '記念日',
+        text: 'ゴミの日',
         type: 'message',
-        channel: process.env.SLACK_CHANNEL as string,
+        channel: process.env.SLACK_CHANNEL_DEV,
       },
     };
-    expect(isPostMessage(eventParams)).toBe(true);
-  });
-  it('記念日というメッセージではないので、slack通知しない', async () => {
-    const eventParams: SlackEvent = {
-      event: {
-        text: 'hello wrold',
-        type: 'message',
-        channel: process.env.SLACK_CHANNEL as string,
-      },
-    };
-    expect(isPostMessage(eventParams)).toBe(false);
-  });
-  it('削除のイベントなので、slack通知しない', async () => {
-    const eventParams: SlackEvent = {
-      event: {
-        text: '記念日',
-        type: 'delete message',
-        channel: process.env.SLACK_CHANNEL as string,
-      },
-    };
-    expect(isPostMessage(eventParams)).toBe(false);
-  });
-  it('記念日以外のチャンネルなので、slack通知しない', async () => {
-    const eventParams: SlackEvent = {
-      event: {
-        text: '記念日',
-        type: 'message',
-        channel: 'dummy',
-      },
-    };
-    expect(isPostMessage(eventParams)).toBe(false);
-  });
-  it('ボットからの投稿なので、slack通知しない', async () => {
-    const eventParams: SlackEvent = {
-      event: {
-        text: '記念日',
-        type: 'message',
-        channel: 'dummy',
-        // eslint-disable-next-line @typescript-eslint/camelcase
-        bot_id: 'aaa',
-      },
-    };
-    expect(isPostMessage(eventParams)).toBe(false);
+    mockEvent.body = JSON.stringify(mockBody);
+    await lambdaHandler(mockEvent);
   });
 });

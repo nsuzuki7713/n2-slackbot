@@ -7,7 +7,7 @@ import { initialize, configInfo, anniversaries } from './config';
 
 initialize();
 
-export async function lambdaHandler(event: lambda.APIGatewayProxyEvent): Promise<Response> {
+export async function lambdaHandler(event: { body: string }): Promise<Response> {
   if (!event.body) return response();
 
   const slackEvent = JSON.parse(event.body) as SlackEvent;
