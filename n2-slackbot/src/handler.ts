@@ -6,7 +6,7 @@ import { createAnniversaryMessage, createGarbageMessage } from './modules/messag
 
 initialize();
 
-export async function lambdaHandler(event: { body: string }): Promise<Response> {
+export async function lambdaHandler(event: { body?: string }): Promise<Response> {
   if (!event.body) return response();
 
   const slackEvent = JSON.parse(event.body) as SlackEvent;

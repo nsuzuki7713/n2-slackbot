@@ -23,7 +23,7 @@
     "typescript": "^3.7.2"
   },
   "scripts": {
-    "test": "jest",
+    "test": "jest --verbose",
     "clean": "rimraf dist/*",
     "tsc": "tsc -p tsconfig.json",
     "cp": "cp -f ./package.json ./yarn.lock ./.env ./dist",
