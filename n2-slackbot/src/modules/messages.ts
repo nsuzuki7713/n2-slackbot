@@ -41,7 +41,7 @@ export function createGarbageMessage(): string {
     date = date.add(1, 'd');
   }
 
-  message.push('https://www.city.arakawa.tokyo.jp/kurashi/gomi/shushubi/syusyubi.files/saisin-gominodasikata.pdf');
+  message.push('https://www.city.arakawa.tokyo.jp/a025/moyasugomi-moyasanaigomi-dasikata.html');
 
   return message.join('\n');
 }

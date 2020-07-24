@@ -28,9 +28,7 @@ describe('messages.tsのUT', () => {
       expectMessages.push(`燃やさないゴミは0日後の1/10`);
       expectMessages.push(`ペットボトルは1日後の1/11`);
       expectMessages.push(`古紙・ビンカンゴミは12日後の1/22`);
-      expectMessages.push(
-        `https://www.city.arakawa.tokyo.jp/kurashi/gomi/shushubi/syusyubi.files/saisin-gominodasikata.pdf`
-      );
+      expectMessages.push(`https://www.city.arakawa.tokyo.jp/a025/moyasugomi-moyasanaigomi-dasikata.html`);
 
       const res = createGarbageMessage();
       console.log(res);
