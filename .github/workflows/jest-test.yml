@@ -26,3 +26,4 @@ jobs:
           name: coverage
           path: ./n2-alackbot/coverage
           retention-days: １
+        working-directory: ./n2-slackbot
