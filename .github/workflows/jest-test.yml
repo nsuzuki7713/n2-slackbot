@@ -24,6 +24,5 @@ jobs:
         uses: actions/upload-artifact@v1
         with:
           name: coverage
-          path: ./n2-alackbot/coverage
+          path: n2-slackbot/coverage
           retention-days: １
-        working-directory: ./n2-slackbot
