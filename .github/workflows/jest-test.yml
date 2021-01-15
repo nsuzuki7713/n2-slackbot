@@ -1,0 +1,28 @@
+name: jest test
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+jobs:
+  unit-test:
+    name: Unit Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2.0.0
+      - name: Set Node.js 12.x
+        uses: actions/setup-node@v1
+        with: 
+          node-version: 12.x
+      - name: Install dependencies
+        run: yarn install
+        working-directory: ./n2-slackbot
+      - name: Test
+        run: yarn test
+        working-directory: ./n2-slackbot
+      - name: Upload test coverage artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: coverage
+          path: n2-slackbot/coverage
+          retention-days: １
