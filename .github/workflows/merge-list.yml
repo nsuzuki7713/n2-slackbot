@@ -18,15 +18,25 @@ jobs:
             });
 
             const pullRequestList = response.data.commits.reduce((acc, cur) => {
-              console.log(cur);
               const [title, , ...body] = cur.commit.message.split('\n');
               const result = title.match(/Merge pull request #(.)/);
               if (result) {
                 acc.push({
+                  author: cur.commit.author.name,
                   pullRequestNumber: result[1],
                   message: body[0],
                 });
               }
               return acc;
             }, []);
-            console.log(pullRequestList)
+            console.log(pullRequestList);
+
+            let body: string[] = [];
+            body.push('# テストリリースのbody');
+            body.push('## リリース内容');
+            body.push('| プルリク | 内容 |');
+            body.push('| -- | -- |');
+            pullRequestList.forEach(({ pullRequestNumber, message }) => {
+              body.push(`| ${pullRequestNumber} | ${message} |`);
+            });
+            console.log(body.join('\n'));
