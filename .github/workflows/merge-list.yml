@@ -31,7 +31,7 @@ jobs:
             }, []);
             console.log(pullRequestList);
 
-            let body: string[] = [];
+            let body = [];
             body.push('# テストリリースのbody');
             body.push('## リリース内容');
             body.push('| プルリク | 内容 |');
