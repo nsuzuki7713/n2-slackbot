@@ -1,4 +1,4 @@
-name: create tag
+name: merge-list
 
 on:
   push
@@ -11,9 +11,9 @@ jobs:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
             const response = await github.repos.compareCommits({
-              context.repo.owner,
-              context.repo.repo,
-              "initial-tag",
-              "master"
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              base: "initial-tag",
+              head: "master"
             });
             console.log(response)
