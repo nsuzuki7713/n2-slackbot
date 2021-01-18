@@ -16,4 +16,17 @@ jobs:
               base: "initial-tag",
               head: "master"
             });
-            console.log(response)
+
+            const pullRequestList = response.data.commits.reduce((acc, cur) => {
+              console.log(cur);
+              const [title, , ...body] = cur.commit.message.split('\n');
+              const result = title.match(/Merge pull request #(.)/);
+              if (result) {
+                acc.push({
+                  pullRequestNumber: result[1],
+                  message: body[0],
+                });
+              }
+              return acc;
+            }, []);
+            console.log(pullRequestList)
