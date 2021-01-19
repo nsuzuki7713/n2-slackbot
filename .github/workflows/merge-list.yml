@@ -40,3 +40,9 @@ jobs:
               body.push(`| ${pullRequestNumber} | ${message} |`);
             });
             console.log(body.join('\n'));
+      - name: Slack Notification
+        uses: tokorom/action-slack-incoming-webhook@main
+        env:
+          INCOMING_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        with:
+          text: Hello, Slack!
